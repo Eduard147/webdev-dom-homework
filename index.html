@@ -65,7 +65,70 @@
 
   <script>
     "use strict";
-    // Код писать здесь
-    console.log("It works!");
+    
+
+const inputNameElement = document.querySelector ('.add-form-name');
+const inputTextElement = document.querySelector ('.add-form-text');
+const buttonElement = document.querySelector ('.add-form-button');
+const commentElement = document.querySelector ('.comments');
+const currentDate = new Date().toLocaleDateString('default', {day: '2-digit', month: '2-digit', year: '2-digit'}) + " "+ new Date().toLocaleTimeString().slice(0,-3);
+
+
+//основное задание + неактивная кнопка при попытке отправить пустую форму
+
+buttonElement.addEventListener("click", () => {
+  if (inputNameElement.value === '' || inputTextElement.value === '' || inputNameElement.value.length < 0 || inputTextElement.value.length < 0 ) {
+    buttonElement.setAttribute('disabled', true);
+    inputNameElement.style.backgroundColor = 'IndianRed';
+    inputTextElement.style.backgroundColor = 'IndianRed';
+      return;
+    }
+    else {
+      buttonElement.removeAttribute('disabled')
+    }
+
+  const commentElementOld = commentElement.innerHTML;
+  commentElement.innerHTML = commentElementOld + `<li class="comment">
+      <div class="comment-header">
+        <div>${inputNameElement.value}</div>
+        <div>${currentDate}</div>
+      </div>
+      <div class="comment-body">
+        <div class="comment-text">
+          ${inputTextElement.value}
+        </div>
+      </div>
+      <div class="comment-footer">
+        <div class="likes">
+          <span class="likes-counter">0</span>
+          <button class="like-button -active-like"></button>
+        </div>
+      </div>
+    </li>`;
+    inputNameElement.value="";
+    inputTextElement.value="";
+});
+
+
+//отправка по клавише ЭНТЕР
+
+    inputNameElement.addEventListener('keyup', function(event) {
+    if (event.code === 'Enter')
+    {
+        event.preventDefault();
+        inputNameElement.submit();
+    }
+});
+
+inputTextElement.addEventListener('keyup', function(event) {
+    if (event.code === 'Enter')
+    {
+        event.preventDefault();
+        inputTextElement.submit();
+    }
+});
+
+//удалить последний комментарий
+
   </script>
 </html>
